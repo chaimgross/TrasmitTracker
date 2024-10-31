@@ -59,6 +59,19 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.androidx.lifecycle.runtime.ktx) // Update to the latest version
+}
 
+// Configure the publishing block
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.chaimgross"           // Set your group ID
+                artifactId = "TrasmitTracker" // Set your artifact ID
+                version = "1.0.3"                 // Set the version
+
+                from(components["release"])       // Use "release" here in `afterEvaluate`
+            }
+        }
+    }
 }
