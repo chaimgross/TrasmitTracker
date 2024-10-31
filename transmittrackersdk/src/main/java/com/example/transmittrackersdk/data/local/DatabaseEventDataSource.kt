@@ -36,9 +36,9 @@ class DatabaseEventDataSource(context: Context) : LocalEventDataSource {
             metaData = userEvent.metaData?.toJsonString()
         )
         withContext(Dispatchers.IO) {
-            eventDao.insertEvent(event)
+            val id = eventDao.insertEvent(event)
+            Log.d(TAG,"Event saved to database: ${event.copy(id = id)}")
         }
-        Log.d(TAG,"Event saved to database: $event")
     }
 
     private fun Map<String, Any?>.toJsonString(): String {

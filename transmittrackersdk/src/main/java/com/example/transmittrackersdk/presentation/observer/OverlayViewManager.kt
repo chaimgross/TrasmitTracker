@@ -2,6 +2,7 @@ package com.example.transmittrackersdk.presentation.observer
 
 import android.app.Activity
 import android.graphics.Color
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -14,6 +15,11 @@ class OverlayViewManager(
     private val activity: Activity,
     private val onTrackClick: (View) -> Unit,
 ) {
+
+    companion object {
+        private const val TAG = "OverlayViewManager"
+    }
+
     private class OverlayView(activity: Activity) : View(activity)
 
     private val overlayView: OverlayView by lazy { createOverlayView() }
@@ -22,7 +28,10 @@ class OverlayViewManager(
     fun setupOverlayIfNeeded(trackedViews: List<View>) {
         this.trackedViews = trackedViews
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
-        if (rootView.any { it is OverlayView }) return // Check if overlay already exists
+        if (rootView.any { it is OverlayView }) {
+            Log.d(TAG, "Overlay already exists")
+            return // Check if overlay already exists
+        }
 
         val params = FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -30,7 +39,7 @@ class OverlayViewManager(
         ).apply {
             gravity = Gravity.CENTER
         }
-
+        Log.d(TAG, "Adding overlay view")
         rootView.addView(overlayView, params)
     }
 
@@ -51,6 +60,7 @@ class OverlayViewManager(
 
             val touchedView = findTrackedViewAtCoordinates(x, y)
             touchedView?.let {
+                Log.d(TAG, "Touched view: $it")
                 it.performClick()
                 onTrackClick(it)
             }

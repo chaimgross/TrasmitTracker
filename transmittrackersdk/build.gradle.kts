@@ -31,26 +31,13 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
     implementation(libs.gson)
@@ -61,16 +48,14 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-// Configure the publishing block
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                groupId = "com.github.chaimgross"           // Set your group ID
-                artifactId = "TrasmitTracker" // Set your artifact ID
-                version = "1.0.3"                 // Set the version
-
-                from(components["release"])       // Use "release" here in `afterEvaluate`
+                groupId = "com.github.chaimgross"
+                artifactId = "TrasmitTracker"
+                version = "1.0.4"
+                from(components["release"])
             }
         }
     }

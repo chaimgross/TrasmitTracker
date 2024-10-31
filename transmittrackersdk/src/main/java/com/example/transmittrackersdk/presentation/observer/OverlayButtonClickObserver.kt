@@ -1,6 +1,7 @@
 package com.example.transmittrackersdk.presentation.observer
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -12,7 +13,12 @@ class OverlayClickObserver(
     private val trackedViewClasses: List<Class<*>> = listOf(Button::class.java, ImageButton::class.java)
 ) {
 
+    companion object {
+        private const val TAG = "OverlayClickObserver"
+    }
+
     fun register(activity: Activity) {
+        Log.d(TAG, "Registering OverlayClickObserver for activity: ${activity.javaClass.simpleName}")
         val trackedViews = findTrackedViews(activity.window.decorView)
         val overlayViewManager = OverlayViewManager(activity, this::trackViewClick)
         overlayViewManager.setupOverlayIfNeeded(trackedViews)

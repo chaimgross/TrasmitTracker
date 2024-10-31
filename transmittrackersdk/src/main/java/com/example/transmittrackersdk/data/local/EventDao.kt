@@ -8,5 +8,5 @@ import com.example.transmittrackersdk.data.model.EventEntity
 @Dao
 interface EventDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEvent(event: EventEntity)
+    suspend fun insertEvent(event: EventEntity) : Long
 }
